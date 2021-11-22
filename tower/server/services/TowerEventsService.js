@@ -26,16 +26,19 @@ class TowerEventsService {
     if (towerEvent.creatorId.toString() !== body.creatorId) {
       throw new Forbidden('you do not have the credentials to change this towerEvent')
     }
+    if (towerEvent.isCanceled) {
+      throw new BadRequest('Invalid Id')
+    }
     return dbContext.TowerEvents.findByIdAndUpdate(body.id, body, { new: true })
   }
 
-  // remove function will change iscanclled to true.  needs userid and the eventId. fedEx is good ref doesnt check for creator
-  //   async cancel(userId, eventId) {
-  //     const towerEvent = await this.getById(eventId)
-
-//     if (towerEvent.creatorId.toString() !== userId) {
-//       throw new Forbidden('you do not have the credentials t')
-//     }
-//   }
+  //   // remove function will change iscanclled to true.  needs userid and the eventId. fedEx is good ref doesnt check for creator
+  async cancel(userId, eventId) {
+    const towerEvent = await this.getById(eventId)
+    if (towerEvent.creatorId.toString() !== userId) {
+      throw new Forbidden('you do not have the credentials t')
+    }
+    await dbContext.TowerEvents.findByIdAndUpdate(eventId, { isCanceled: true }, { new: true })
+  }
 }
 export const towerEventsService = new TowerEventsService()
