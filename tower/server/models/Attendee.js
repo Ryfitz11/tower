@@ -4,7 +4,7 @@ const ObjectId = Schema.Types.ObjectId
 
 export const AttendeeSchema = new Schema(
   {
-    eventId: { type: ObjectId, required: true, ref: 'Event' },
+    eventId: { type: ObjectId, required: true, ref: 'TowerEvent' },
     accountId: { type: ObjectId, required: true, ref: 'Account' }
   },
   { timestamps: true, toJSON: { virtuals: true } }
@@ -14,7 +14,7 @@ AttendeeSchema.index({ eventId: 1, accountId: 1 }, { unique: true })
 AttendeeSchema.virtual('event', {
   localField: 'eventId',
   foreignField: '_id',
-  ref: 'Event',
+  ref: 'TowerEvent',
   justOne: true
 })
 
