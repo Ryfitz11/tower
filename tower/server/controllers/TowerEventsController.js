@@ -1,9 +1,9 @@
 import { Auth0Provider } from '@bcwdev/auth0provider'
-import { towerEventService } from '../services/TowerEventService'
+import { towerEventsService } from '../services/TowerEventsService'
 import BaseController from '../utils/BaseController'
 import { logger } from '../utils/Logger'
 
-export class TowerEventController extends BaseController {
+export class TowerEventsController extends BaseController {
   constructor() {
     super('api/events')
     this.router
@@ -18,7 +18,7 @@ export class TowerEventController extends BaseController {
   async create(req, res, next) {
     try {
       req.body.creatorId = req.userInfo.id
-      const towerEvent = await towerEventService.create(req.body)
+      const towerEvent = await towerEventsService.create(req.body)
       logger.log('eventController', towerEvent)
       return res.send(towerEvent)
     } catch (error) {
@@ -29,7 +29,7 @@ export class TowerEventController extends BaseController {
   async getAll(req, res, next) {
     try {
       const query = req.query
-      const towerEvent = await towerEventService.getAll(query)
+      const towerEvent = await towerEventsService.getAll(query)
       return res.send(towerEvent)
     } catch (error) {
       next(error)
@@ -38,7 +38,7 @@ export class TowerEventController extends BaseController {
 
   async getById(req, res, next) {
     try {
-      const towerEvent = await towerEventService.getById(req.params.id)
+      const towerEvent = await towerEventsService.getById(req.params.id)
       return res.send(towerEvent)
     } catch (error) {
       next(error)
@@ -50,7 +50,7 @@ export class TowerEventController extends BaseController {
       req.body.creatorId = req.userInfo.id
       req.body.id = req.params.id
       delete req.body.isCanceled
-      const towerEvent = await towerEventService.edit(req.body)
+      const towerEvent = await towerEventsService.edit(req.body)
       return res.send(towerEvent)
     } catch (error) {
       next(error)

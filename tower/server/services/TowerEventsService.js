@@ -2,7 +2,7 @@ import { dbContext } from '../db/DbContext'
 import { BadRequest, Forbidden } from '../utils/Errors'
 import { logger } from '../utils/Logger'
 
-class TowerEventService {
+class TowerEventsService {
   async create(body) {
     const newTowerEvent = await dbContext.TowerEvents.create(body)
     logger.log('towerEventService ', newTowerEvent)
@@ -38,4 +38,4 @@ class TowerEventService {
 //     }
 //   }
 }
-export const towerEventService = new TowerEventService()
+export const towerEventsService = new TowerEventsService()
