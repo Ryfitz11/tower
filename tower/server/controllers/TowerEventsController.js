@@ -1,5 +1,6 @@
 import { Auth0Provider } from '@bcwdev/auth0provider'
 import { attendeesService } from '../services/AttendeesService'
+import { commentsService } from '../services/CommentsService'
 import { towerEventsService } from '../services/TowerEventsService'
 import BaseController from '../utils/BaseController'
 import { logger } from '../utils/Logger'
@@ -11,6 +12,7 @@ export class TowerEventsController extends BaseController {
       .get('', this.getAll)
       .get('/:id', this.getById)
       .get('/:id/attendees', this.getAttendeesByEvent)
+      .get('/:id/comments', this.getComments)
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.create)
       .put('/:id', this.edit)
@@ -18,6 +20,16 @@ export class TowerEventsController extends BaseController {
   }
 
   // getAttendeesByEvent needs to find all the attendees for a single event.
+  async getComments(req, res, next) {
+    try {
+      const comments = await commentsService.getComments({ eventId: req.params.id })
+      logger.log('getAttendeesByEvent', comments)
+      return res.send(comments)
+    } catch (error) {
+      next(error)
+    }
+  }
+
   async getAttendeesByEvent(req, res, next) {
     try {
       const towerEvent = await attendeesService.getAttendeesByEvent(req.params.id)

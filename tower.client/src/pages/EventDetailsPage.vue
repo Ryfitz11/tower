@@ -1,5 +1,5 @@
 <template>
-  {{ towerEvent.name }}
+  <h1>This is the Event Details page</h1>
 </template>
 
 <script>

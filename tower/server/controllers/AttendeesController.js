@@ -8,13 +8,25 @@ export class AttendeesController extends BaseController {
     this.router
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.create)
-      // .delete('/:id', this.remove)
+      .delete('/:id', this.remove)
   }
 
   async create(req, res, next) {
     try {
       req.body.accountId = req.userInfo.id
       const attendee = await attendeesService.create(req.body)
+      return res.send(attendee)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async remove(req, res, next) {
+    try {
+      req.body.accountId = req.userInfo.id
+      const userId = req.userInfo.id
+      const ticketId = req.params.id
+      const attendee = await attendeesService.remove(ticketId, userId)
       return res.send(attendee)
     } catch (error) {
       next(error)

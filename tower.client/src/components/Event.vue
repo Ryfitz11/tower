@@ -4,7 +4,8 @@
       <div class="card-text">
         <h3>{{ towerEvent.name }}</h3>
         <h6>{{ towerEvent.location }}</h6>
-        <!-- <h6>{{ towerEvent.startDate }}</h6> -->
+        <h6>{{ towerEvent.startDate }}</h6>
+        <img classs="image-fluid" src="towerEvent.coverImg" alt="" />
       </div>
     </router-link>
   </div>

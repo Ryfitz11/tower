@@ -1,12 +1,12 @@
 import { dbContext } from '../db/DbContext'
-import { BadRequest } from '../utils/Errors'
+import { BadRequest, Forbidden } from '../utils/Errors'
 import { towerEventsService } from './TowerEventsService'
 
 class AttendeesService {
   async create(body) {
     const event = await towerEventsService.getById(body.eventId)
     const found = await dbContext.Attendees.findOne({ eventId: body.eventId, accountId: body.accountId })
-    if (found) {
+    if (found || event.capacity === 0) {
       throw new BadRequest('You are already attending that event')
     }
     const attendee = await dbContext.Attendees.create(body)
@@ -30,6 +30,18 @@ class AttendeesService {
       throw new BadRequest('Invalid Id')
     }
     return towerEvent
+  }
+
+  async remove(ticketId, userId) {
+    const ticket = await dbContext.Attendees.findById(ticketId)
+    const event = await towerEventsService.getById(ticket.eventId)
+
+    if (ticket.accountId.toString() !== userId) {
+      throw new Forbidden('Invalid Id')
+    }
+    await dbContext.Attendees.findByIdAndDelete(ticketId)
+    event.capacity++
+    await event.save()
   }
 }
 
