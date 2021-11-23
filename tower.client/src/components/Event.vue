@@ -1,26 +1,28 @@
 <template>
-  {{ events.name }}
+  <div class="card selectable">
+    <router-link :to="{ name: 'EventDetails', params: { id: towerEvent.id } }">
+      <div class="card-text">
+        <h3>{{ towerEvent.name }}</h3>
+        <h6>{{ towerEvent.location }}</h6>
+        <!-- <h6>{{ towerEvent.startDate }}</h6> -->
+      </div>
+    </router-link>
+  </div>
 </template>
 
 <script>
-import { computed, onMounted } from "@vue/runtime-core"
-import { logger } from "../utils/Logger"
-import Pop from "../utils/Pop"
-import { AppState } from "../AppState"
-import { eventsService } from "../services/EventsService"
 
 export default {
+  props: {
+    towerEvent: {
+      type: Object,
+      required: true
+    }
+  },
   setup() {
-    onMounted(async () => {
-      try {
-        await eventsService.getAll()
-      } catch (error) {
-        logger.log(error)
-        Pop.toast('Something went wrong', 'error')
-      }
-    })
+
+
     return {
-      events: computed(() => AppState.events)
     }
   }
 }
