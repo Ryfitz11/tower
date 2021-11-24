@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid d-flex">
+  <div class="container-fluid">
     <div class="row">
       <div class="col-3">
         <img class="img-fluid" :src="towerEvent.coverImg" alt="" />
@@ -20,9 +20,14 @@
           <button v-if="attendee?.id" @click="removeAttendee()" class="col-3">
             Un-attend
           </button>
-
           <button v-else @click="createAttendee()" class="col-3">Attend</button>
         </div>
+      </div>
+    </div>
+    <div class="row AllAttendees">
+      <p>All the profiles who attended this event</p>
+      <div v-for="b in attendees" :key="b.id">
+        <img :src="b.account.picture" alt="" />
       </div>
     </div>
   </div>
@@ -54,6 +59,7 @@ export default {
       towerEvent: computed(() => AppState.activeEvent),
       account: computed(() => AppState.account),
       attendee: computed(() => AppState.attendees.find(a => a.accountId == AppState.account.id)),
+      attendees: computed(() => AppState.attendees),
       async remove() {
         try {
           if (await Pop.confirm()) {

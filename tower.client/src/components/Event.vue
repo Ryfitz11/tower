@@ -6,6 +6,7 @@
         <h3>{{ towerEvent.name }}</h3>
         <h6>{{ towerEvent.location }}</h6>
         <h6>{{ towerEvent.startDate?.split("T")[0] }}</h6>
+        <p>{{ towerEvent.capacity }} tickets left</p>
       </div>
     </router-link>
   </div>

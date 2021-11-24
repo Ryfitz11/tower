@@ -1,7 +1,6 @@
 <template>
   <div class="container-fluid">
-    <div class="row">
-      <div class="col-2"></div>
+    <div class="row justify-content-around py-2">
       <div class="col-2"><button @click="type = ''">All</button></div>
       <div class="col-2">
         <button @click="type = 'concert'">Concert</button>

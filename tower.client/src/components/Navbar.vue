@@ -31,7 +31,7 @@
             data-bs-toggle="modal"
             data-bs-target="#createEvent"
           >
-            Launch demo modal
+            Create New Event
           </button>
         </li>
       </ul>
