@@ -25,10 +25,17 @@
       </div>
     </div>
     <div class="row AllAttendees">
-      <p>All the profiles who attended this event</p>
-      <div v-for="b in attendees" :key="b.id">
-        <img :src="b.account.picture" alt="" />
+      <p>Profiles who are attending this Event</p>
+      <div v-for="a in attendees" :key="a.id">
+        <img
+          :src="a.account.picture"
+          :title="a.account.name"
+          class="profile-pic"
+        />
       </div>
+    </div>
+    <div v-for="c in comments" :key="c.id" class="row">
+      <Comment />
     </div>
   </div>
 </template>
@@ -94,4 +101,8 @@ export default {
 </script>
 
 <style>
+.profile-pic {
+  height: 20px;
+  padding-right: 2px;
+}
 </style>
