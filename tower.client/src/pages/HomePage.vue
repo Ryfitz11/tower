@@ -1,7 +1,26 @@
 <template>
   <div class="container-fluid">
     <div class="row">
+      <div class="col-2"></div>
+      <div class="col-2"><button @click="type = ''">All</button></div>
+      <div class="col-2">
+        <button @click="type = 'concert'">Concert</button>
+      </div>
+      <div class="col-2">
+        <button @click="type = 'convention'">Convention</button>
+      </div>
+      <div class="col-2"><button @click="type = 'sport'">Sport</button></div>
+      <div class="col-2">
+        <button @click="type = 'digital'">Digital</button>
+      </div>
+    </div>
+    <div v-if="type == ''" class="row">
       <div class="col-4" v-for="e in events" :key="e.id">
+        <Event :towerEvent="e" />
+      </div>
+    </div>
+    <div v-else class="row">
+      <div class="col-4" v-for="e in filterEvents" :key="e.id">
         <Event :towerEvent="e" />
       </div>
     </div>
@@ -9,13 +28,16 @@
 </template>
 
 <script>
-import { computed, onMounted } from "@vue/runtime-core"
+import { computed, onMounted, ref } from "@vue/runtime-core"
 import { eventsService } from "../services/EventsService"
 import Pop from "../utils/Pop"
 import { logger } from "../utils/Logger"
 import { AppState } from "../AppState"
 export default {
+
   setup() {
+    const type = ref('')
+
     onMounted(async () => {
       try {
         await eventsService.getAll()
@@ -25,7 +47,9 @@ export default {
       }
     })
     return {
-      events: computed(() => AppState.events)
+      events: computed(() => AppState.events),
+      filterEvents: computed(() => AppState.events.filter(e => e.type == type.value)),
+      type
     }
   }
 }

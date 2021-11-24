@@ -19,12 +19,20 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto">
         <li>
-          <router-link
+          <!-- <router-link
             :to="{ name: 'About' }"
             class="btn text-success lighten-30 selectable text-uppercase"
           >
             About
-          </router-link>
+          </router-link> -->
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#createEvent"
+          >
+            Launch demo modal
+          </button>
         </li>
       </ul>
       <span class="navbar-text">
@@ -82,6 +90,7 @@
         </div>
       </span>
     </div>
+    <createEvent />
   </nav>
 </template>
 
