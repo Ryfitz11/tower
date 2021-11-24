@@ -1,8 +1,11 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-3">
+      <div class="col-3 text-center">
         <img class="img-fluid" :src="towerEvent.coverImg" alt="" />
+        <button v-if="towerEvent.isCanceled == true" @click="cancelEvent()">
+          cancel event
+        </button>
       </div>
       <div class="col-9">
         <div class="row">
@@ -77,6 +80,7 @@ export default {
           logger.error(error);
         }
       },
+
       async createAttendee() {
         const userId = AppState.account.id
         const eventId = route.params.id
@@ -91,6 +95,13 @@ export default {
         const attendeeId = this.attendee.id
         try {
           await attendeesService.removeAttendee(attendeeId)
+        } catch (error) {
+          logger.error(error);
+        }
+      },
+      async cancelEvent() {
+        try {
+          await eventsService.cancelEvent(route.params.id)
         } catch (error) {
           logger.error(error);
         }

@@ -23,7 +23,7 @@ class EventsService {
     AppState.events.push(new Event(res.data))
     // AppState.activeEvent = 
   }
-  async remove(eventId) {
+  async cancelEvent(eventId) {
     const res = await api.delete('api/events/' + eventId)
     AppState.events = AppState.events.filter(s => s.id !== eventId)
 
